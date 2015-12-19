@@ -8,7 +8,6 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    print '6N1C_2k2WfAx9A6aS18a'
     import requests.packages.urllib3
 
     return render_template('index.html')
@@ -18,7 +17,7 @@ def home():
     try:
         symbol = request.form['symbol']
         checklist = request.form.getlist('check')
-        data = json.load(urllib2.urlopen('https://www.quandl.com/api/v3/datasets/WIKI/'+symbol+'.json?api_key=6N1C_2k2WfAx9A6aS18a'))[u'dataset']
+        data = json.load(urllib2.urlopen('https://www.quandl.com/api/v3/datasets/WIKI/'+symbol+'.json?api_key=YourAPIKEY'))[u'dataset']
         values =data['data']
         column_name = data['column_names']
         date = []
