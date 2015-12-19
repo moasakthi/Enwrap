@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link class="include" rel="stylesheet" type="text/css" href='http://www.jqplot.com/src/jquery.jqplot.css' />
+    <title>Stock Prices</title>
+</head>
+<body>
+<h1>Enwrap IO</h1>
+<div class="form">
+    <input type="text" name="symbol" placeholder="Enter Symbol if you know">
+    <br>
+    Open :<input name="options" type="checkbox" value="Open">
+    High :<input name='options' type="checkbox" value="High">
+    Low :<input type="options" name ='low' value="Low">
+    Close: <input type="options" name='close' value="Close">
+<br>
+    <input id ='result'type="submit" value="Get Data">
+    </div>
+</body>
+
+<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>
+<script src='http://www.jqplot.com/src/jquery.jqplot.js'></script>
+<script src='http://www.jqplot.com/src/plugins/jqplot.canvasTextRenderer.js'></script>
+<script src='http://cdn.jsdelivr.net/jqplot/1.0.8/plugins/jqplot.cursor.js'></script>
+<script src='http://www.jqplot.com/src/plugins/jqplot.canvasAxisLabelRenderer.js'></script>
+<script src='http://cdn.jsdelivr.net/jqplot/1.0.8/plugins/jqplot.dateAxisRenderer.js'></script>
+<script src='http://cdn.jsdelivr.net/jqplot/1.0.8/plugins/jqplot.logAxisRenderer.js'></script>
+<script src='http://cdn.jsdelivr.net/jqplot/1.0.8/plugins/jqplot.json2.js'></script>
+
+<script>
+$("#result").click(function(){
+    var symbol = $('#')
+var data = $.get('result?')
+    var open_data = {{result[0] }};
+  line1 = open_data;
+var close_data ={{result[1] }};
+        line2 =close_data;
+
+    var plot1 = $.jqplot('chart1', [line1,line2], {
+        title: 'Enwrape.',
+        series: [{
+            label: 'primary series',
+            neighborThreshold: -1,
+            xaxis: 'xaxis'
+        }, {
+            label: 'comparative series',
+            xaxis: 'x2axis'
+        }],
+        axes: {
+            xaxis: {
+                renderer:$.jqplot.DateAxisRenderer,
+                tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+                tickOptions: {
+                  angle: -30
+                }
+            },
+            x2axis: {
+                renderer:$.jqplot.DateAxisRenderer,
+                tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+                tickOptions: {
+                  angle: -30
+                }
+            },
+            yaxis: {
+                renderer: $.jqplot.LogAxisRenderer,
+                tickOptions:{ prefix: '$' }
+            }
+        },
+        cursor:{
+            show: true,
+            zoom: true
+        }
+    });
+
+});
+</script>
+<!DOCTYPE html>
+<html>
+<head>
+    https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js
+<link class="include" rel="stylesheet" type="text/css" href='http://www.jqplot.com/src/jquery.jqplot.css' />
+<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>
+<script src='http://www.jqplot.com/src/jquery.jqplot.js'></script>
+<script src='http://www.jqplot.com/src/plugins/jqplot.canvasTextRenderer.js'></script>
+<script src='http://cdn.jsdelivr.net/jqplot/1.0.8/plugins/jqplot.cursor.js'></script>
+<script src='http://www.jqplot.com/src/plugins/jqplot.canvasAxisLabelRenderer.js'></script>
+<script src='http://cdn.jsdelivr.net/jqplot/1.0.8/plugins/jqplot.dateAxisRenderer.js'></script>
+<script src='http://cdn.jsdelivr.net/jqplot/1.0.8/plugins/jqplot.logAxisRenderer.js'></script>
+<script src='http://cdn.jsdelivr.net/jqplot/1.0.8/plugins/jqplot.json2.js'></script>
+
+
+    <title></title>
+</head>
+<body>
+<input type="hidden" value="{{ result['Open'] }}" id="open">
+<input type="hidden" value="{{ result['Close'] }}" id="close">
+<div id ='chart1'></div>
+</body>
+<script>
+    $(document).ready(function(){
+       var data = {{ result["Close"] }};
+        for (i=0;i<data.length;i++){
+            console.log(data[i]);
+
+        }
+
+    });
+
+</script>
+<script>
+$(document).on('ready',function(){
+console.log({{ result }});
+    var open_data = {{result["Open"] }};
+  line1 = open_data;
+var close_data ={{result["Close"] }};
+        line2 =close_data;
+
+    var plot1 = $.jqplot('chart1', [line1,line2], {
+        title: 'Enwrape.',
+        series: [{
+            label: 'primary series',
+            neighborThreshold: -1,
+            xaxis: 'xaxis'
+        }, {
+            label: 'comparative series',
+            xaxis: 'x2axis'
+        }],
+        axes: {
+            xaxis: {
+                renderer:$.jqplot.DateAxisRenderer,
+                tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+                tickOptions: {
+                  angle: -30
+                }
+            },
+            x2axis: {
+                renderer:$.jqplot.DateAxisRenderer,
+                tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+                tickOptions: {
+                  angle: -30
+                }
+            },
+            yaxis: {
+                renderer: $.jqplot.LogAxisRenderer,
+                tickOptions:{ prefix: '$' }
+            }
+        },
+        cursor:{
+            show: true,
+            zoom: true
+        }
+    });
+
+});
+</script>
+</html>

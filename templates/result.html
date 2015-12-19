@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Result</title>
+    <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
+</head>
+<body>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+
+
+       <p class="navbar-text"><strong>Enwrap IO</strong> </p> <p class="navbar-text navbar-right">Developed by <a href="#" class="navbar-link">Siva Sakthi Velan</a></p>
+
+
+  </div>
+</nav>
+<div class="container">
+
+    <div class="col-md-8">
+    <div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">Line Chart for {{ symbol }}</h3>
+  </div>
+  <div class="panel-body">
+<canvas id="chart" width="600" height="400"></canvas>
+      <div id="legendDiv"></div>
+      </div>
+</div>
+ </div>
+ </div>
+
+
+<script>
+
+   // bar chart data
+   var barData = {
+   labels : [{% for item in Date %}
+                  "{{item}}",
+              {% endfor %}],
+   datasets : [
+      {label:'Open Price',
+            fillColor: "rgba(70, 202, 235,0.2)",
+            strokeColor: "rgba(70, 202, 235,1)",
+            pointColor: "rgba(70, 202, 235,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(70, 202, 235,1)",
+            bezierCurve : false,
+            data : [{% for item in row1 %}
+                      {{item}},
+                    {% endfor %}]
+      },{label:'High Price',
+            fillColor: "rgba(40, 102, 135,0.2)",
+            strokeColor: "rgba(40, 102, 135,1)",
+            pointColor: "rgba(40, 102, 135,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(40, 102, 135,1)",
+            bezierCurve : false,
+            data : [{% for item in row3 %}
+                      {{item}},
+                    {% endfor %}]
+      },
+   {label:'Low Price',
+            fillColor: "rgba(170, 102, 35,0.2)",
+            strokeColor: "rgba(170, 102, 35,1)",
+            pointColor: "rgba(170, 102, 35,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(170, 102, 35,1)",
+            bezierCurve : false,
+            data : [{% for item in row4 %}
+                      {{item}},
+                    {% endfor %}]
+      },
+       {label:'Close Price',
+            fillColor: "rgba(123, 191, 63,0.2)",
+            strokeColor: "rgba(123, 191, 63,1)",
+            pointColor: "rgba(123, 191, 63,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(123, 191, 63,1)",
+            bezierCurve : false,
+            data : [{% for item in row2 %}
+                      {{item}},
+                    {% endfor %}]
+      }]
+           }
+
+
+    Chart.defaults.global.animationSteps = 50;
+    Chart.defaults.global.tooltipYPadding = 16;
+    Chart.defaults.global.tooltipCornerRadius = 0;
+    Chart.defaults.global.tooltipTitleFontStyle = "normal";
+    Chart.defaults.global.tooltipFillColor = "rgba(0,0,0,0.8)";
+    Chart.defaults.global.animationEasing = "easeOutBounce";
+    Chart.defaults.global.responsive = false;
+    Chart.defaults.global.scaleLineColor = "black";
+    Chart.defaults.global.scaleFontSize = 16;
+
+
+   // get bar chart canvas
+   var mychart = document.getElementById("chart").getContext("2d");
+
+
+  //and append it to your page somewhere
+
+
+   steps = {{Steps}};
+   max = {{ Maximum }};
+   // draw bar chart
+   var LineChartDemo = new Chart(mychart).Line(barData, {
+        scaleOverride: true,
+        scaleSteps: steps,
+        scaleStepWidth: 10,
+        scaleStartValue: {{ Minimum }},
+        scaleShowVerticalLines: true,
+        scaleShowGridLines : true,
+        barShowStroke : true,
+        scaleShowLabels: true,
+        bezierCurve: false,
+       legendTemplate : ''
+                  +'<% for (var i=0; i<datasets.length; i++) { %>'
+                    +''
+                    +'<span class=\"label\"label  style=\"color:<%=datasets[i].strokeColor%>\">'
+                    +'<% if (datasets[i].label) { %><%= datasets[i].label %><% } %>'
+                  +'</span>'
+                +'<% } %>'
+              +''
+
+
+   });
+
+var legend = LineChartDemo.generateLegend();
+  $('#legendDiv').append(legend);
+</script>
+
+</body>
+
+
+
+{#<script src="{{ url_for('static', filename='my_line.js') }}"></script>#}
+
+</html>
