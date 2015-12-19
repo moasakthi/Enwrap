@@ -17,7 +17,7 @@ def home():
     try:
         symbol = request.form['symbol']
         checklist = request.form.getlist('check')
-        data = json.load(urllib2.urlopen('https://www.quandl.com/api/v3/datasets/WIKI/'+symbol+'.json?api_key=YourAPIKEY'))[u'dataset']
+        data = json.load(urllib2.urlopen('https://www.quandl.com/api/v3/datasets/WIKI/'+symbol+'.json?api_key=YourAPIKEYHERE'))[u'dataset']
         values =data['data']
         column_name = data['column_names']
         date = []
